@@ -1,26 +1,402 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Design system "Clear": white space first. One typeface at regular weight, ink navy text,
+   a single teal accent, and soft colour washes instead of boxes. */
+@theme {
+  --breakpoint-lg: 58rem;
+  --color-primary: #0b1b2b;
+  --color-primary-dark: #0b1b2b;
+  --color-primary-soft: #f2f5f7;
+  --color-accent: #0e7c7b;
+  --color-accent-dark: #0a5f5e;
+  --color-accent-soft: #e8f4f3;
+  --color-accent-bright: #7fd6cf;
+  --color-ink: #1c2a38;
+  --color-muted: #5a6876;
+  --color-surface: #ffffff;
+  --color-panel: #ffffff;
+  --color-line: #e4e9ee;
+  --color-ok: #0e7c7b;
+  --font-sans: var(--font-body-face), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-body-face), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-body-face), ui-sans-serif, system-ui, sans-serif;
+  --shadow-soft: 0 1px 2px rgb(11 27 43 / 0.03), 0 16px 40px -24px rgb(11 27 43 / 0.16);
+  --shadow-lift: 0 2px 6px rgb(11 27 43 / 0.04), 0 30px 60px -30px rgb(11 27 43 / 0.25);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html {
+  scroll-behavior: smooth;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* On laptops and desktops the whole layout is set 10% smaller than the browser default,
+   which gives the look of the site at 90% zoom while the browser stays at 100%.
+   The desktop layout also starts a little earlier (the "lg" breakpoint below), matching
+   how a 90% zoom makes the window behave wider. Phones and tablets keep the full size. */
+@media (min-width: 58rem) {
+  html {
+    font-size: 90%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.7;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-accent-soft);
+  color: var(--color-primary);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+@layer components {
+  .font-display {
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+  .wrap {
+    @apply mx-auto w-full max-w-[100rem] px-5 sm:px-10 lg:px-16;
+  }
+  .section {
+    @apply py-24 sm:py-32;
+  }
+  /* Small label above a heading: an accent slash and a word, nothing more */
+  .eyebrow {
+    @apply flex items-center gap-2.5 text-sm font-normal tracking-wide text-muted;
+  }
+  .eyebrow::before {
+    content: "";
+    @apply h-4 w-px rotate-[20deg] bg-accent;
+  }
+  .h1 {
+    @apply text-[2rem] leading-[1.14] text-primary sm:text-5xl lg:text-[3.5rem];
+    font-weight: 400;
+    letter-spacing: -0.025em;
+  }
+  .h2 {
+    @apply text-[1.9rem] leading-[1.18] text-primary sm:text-[2.4rem];
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+  .h3 {
+    @apply text-lg font-normal leading-snug text-primary;
+  }
+  .lead {
+    @apply text-lg leading-relaxed text-muted sm:text-xl;
+  }
+  /* Large sentence used to open a section */
+  .statement {
+    @apply text-[1.6rem] leading-[1.35] text-primary sm:text-[2rem];
+    font-weight: 400;
+    letter-spacing: -0.015em;
+  }
+  .btn {
+    @apply inline-flex h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-normal tracking-wide transition-colors duration-200;
+  }
+  .btn-primary,
+  .btn-dark {
+    @apply bg-primary text-white hover:bg-accent-dark;
+  }
+  .btn-secondary {
+    @apply border border-primary/30 bg-transparent text-primary hover:border-primary;
+  }
+  .btn-light {
+    @apply bg-white text-primary hover:bg-primary-soft;
+  }
+  .card {
+    @apply rounded-3xl bg-panel p-8 shadow-soft;
+  }
+  .card-hover {
+    @apply transition-shadow duration-300 hover:shadow-lift;
+  }
+  .link {
+    @apply inline-flex items-center gap-1.5 text-[0.95rem] font-normal text-primary underline decoration-accent decoration-1 underline-offset-[6px] hover:text-accent-dark;
+  }
+  .link::after {
+    content: "\2192";
+    transition: transform 0.15s;
+  }
+  .link:hover::after {
+    transform: translateX(3px);
+  }
+  .field {
+    @apply mt-1.5 block w-full rounded-xl border border-line bg-white px-4 py-3 text-base font-normal text-ink transition-colors hover:border-primary/40 focus:border-primary;
+  }
+  .label {
+    @apply block text-sm font-normal text-primary;
+  }
+  .badge {
+    @apply inline-flex items-center rounded-full border border-line px-2.5 py-0.5 text-xs font-normal text-muted;
+  }
+  .chip {
+    @apply rounded-full border border-line px-3.5 py-1.5 text-sm font-normal text-ink;
+  }
+  .num {
+    @apply text-sm font-normal tabular-nums text-accent-dark;
+  }
+  .placeholder {
+    @apply rounded-md border border-dashed border-accent/50 bg-accent-soft px-1.5 py-0.5 text-[0.7rem] font-normal text-accent-dark;
+  }
+  /* Groups of items separated by a hairline above each, never boxed */
+  .tiles {
+    @apply grid gap-x-10 gap-y-0;
+  }
+  .tiles > * {
+    @apply border-t border-line;
+  }
+  /* Soft colour atmosphere used behind heroes and closing sections */
+  .bg-wash {
+    background:
+      radial-gradient(55% 75% at 12% 8%, #fde8df 0%, transparent 62%),
+      radial-gradient(50% 70% at 92% 18%, #dcecfb 0%, transparent 62%),
+      radial-gradient(60% 80% at 62% 105%, #ece4fa 0%, transparent 62%),
+      #f9fbfc;
+  }
+  /* A full section used as a colour band: same cap and corners as the other panels */
+  .band {
+    margin-inline: max(0.75rem, calc((100% - 110rem) / 2));
+    border-radius: 2rem;
+  }
+  .glass {
+    @apply rounded-[2rem] border border-white/70 bg-white/65 shadow-soft backdrop-blur-xl;
+  }
+  .bg-sun {
+    background: var(--color-accent);
+  }
+  .text-sun {
+    color: var(--color-accent-dark);
+  }
+}
+
+/* Sections ease in as they scroll into view. Pure CSS, skipped where unsupported or when motion is reduced. */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 26%;
+    }
+  }
+}
+
+
+/* Animated workflow: five steps light up in turn over a 9-second loop, then reset.
+   Slot = one sixth of the loop (five steps plus a pause). */
+@keyframes wf-node-0 {
+  0.00%, 15.67% { background-color: var(--color-accent); color: #ffffff; border-color: var(--color-accent); box-shadow: 0 0 0 7px rgb(14 124 123 / 0.14); }
+  16.67%, 94% { background-color: var(--color-accent-soft); color: var(--color-accent-dark); border-color: transparent; box-shadow: 0 0 0 0 rgb(14 124 123 / 0); }
+  98%, 100% { background-color: #ffffff; color: var(--color-muted); border-color: var(--color-line); box-shadow: 0 0 0 0 rgb(14 124 123 / 0); }
+}
+@keyframes wf-tick-0 {
+  0%, 15.67% { opacity: 0; transform: scale(0.6); }
+  17.67%, 94% { opacity: 1; transform: none; }
+  98%, 100% { opacity: 0; transform: scale(0.6); }
+}
+@keyframes wf-row-0 {
+  0%, 0.00% { background-color: transparent; }
+  0.50%, 15.67% { background-color: rgb(255 255 255 / 0.85); }
+  17.67%, 100% { background-color: transparent; }
+}
+@keyframes wf-node-1 {
+  0%, 16.17% { background-color: #ffffff; color: var(--color-muted); border-color: var(--color-line); box-shadow: 0 0 0 0 rgb(14 124 123 / 0); }
+  16.67%, 32.33% { background-color: var(--color-accent); color: #ffffff; border-color: var(--color-accent); box-shadow: 0 0 0 7px rgb(14 124 123 / 0.14); }
+  33.33%, 94% { background-color: var(--color-accent-soft); color: var(--color-accent-dark); border-color: transparent; box-shadow: 0 0 0 0 rgb(14 124 123 / 0); }
+  98%, 100% { background-color: #ffffff; color: var(--color-muted); border-color: var(--color-line); box-shadow: 0 0 0 0 rgb(14 124 123 / 0); }
+}
+@keyframes wf-tick-1 {
+  0%, 32.33% { opacity: 0; transform: scale(0.6); }
+  34.33%, 94% { opacity: 1; transform: none; }
+  98%, 100% { opacity: 0; transform: scale(0.6); }
+}
+@keyframes wf-row-1 {
+  0%, 16.17% { background-color: transparent; }
+  17.17%, 32.33% { background-color: rgb(255 255 255 / 0.85); }
+  34.33%, 100% { background-color: transparent; }
+}
+@keyframes wf-node-2 {
+  0%, 32.83% { background-color: #ffffff; color: var(--color-muted); border-color: var(--color-line); box-shadow: 0 0 0 0 rgb(14 124 123 / 0); }
+  33.33%, 49.00% { background-color: var(--color-accent); color: #ffffff; border-color: var(--color-accent); box-shadow: 0 0 0 7px rgb(14 124 123 / 0.14); }
+  50.00%, 94% { background-color: var(--color-accent-soft); color: var(--color-accent-dark); border-color: transparent; box-shadow: 0 0 0 0 rgb(14 124 123 / 0); }
+  98%, 100% { background-color: #ffffff; color: var(--color-muted); border-color: var(--color-line); box-shadow: 0 0 0 0 rgb(14 124 123 / 0); }
+}
+@keyframes wf-tick-2 {
+  0%, 49.00% { opacity: 0; transform: scale(0.6); }
+  51.00%, 94% { opacity: 1; transform: none; }
+  98%, 100% { opacity: 0; transform: scale(0.6); }
+}
+@keyframes wf-row-2 {
+  0%, 32.83% { background-color: transparent; }
+  33.83%, 49.00% { background-color: rgb(255 255 255 / 0.85); }
+  51.00%, 100% { background-color: transparent; }
+}
+@keyframes wf-node-3 {
+  0%, 49.50% { background-color: #ffffff; color: var(--color-muted); border-color: var(--color-line); box-shadow: 0 0 0 0 rgb(14 124 123 / 0); }
+  50.00%, 65.67% { background-color: var(--color-accent); color: #ffffff; border-color: var(--color-accent); box-shadow: 0 0 0 7px rgb(14 124 123 / 0.14); }
+  66.67%, 94% { background-color: var(--color-accent-soft); color: var(--color-accent-dark); border-color: transparent; box-shadow: 0 0 0 0 rgb(14 124 123 / 0); }
+  98%, 100% { background-color: #ffffff; color: var(--color-muted); border-color: var(--color-line); box-shadow: 0 0 0 0 rgb(14 124 123 / 0); }
+}
+@keyframes wf-tick-3 {
+  0%, 65.67% { opacity: 0; transform: scale(0.6); }
+  67.67%, 94% { opacity: 1; transform: none; }
+  98%, 100% { opacity: 0; transform: scale(0.6); }
+}
+@keyframes wf-row-3 {
+  0%, 49.50% { background-color: transparent; }
+  50.50%, 65.67% { background-color: rgb(255 255 255 / 0.85); }
+  67.67%, 100% { background-color: transparent; }
+}
+@keyframes wf-node-4 {
+  0%, 66.17% { background-color: #ffffff; color: var(--color-muted); border-color: var(--color-line); box-shadow: 0 0 0 0 rgb(14 124 123 / 0); }
+  66.67%, 82.33% { background-color: var(--color-accent); color: #ffffff; border-color: var(--color-accent); box-shadow: 0 0 0 7px rgb(14 124 123 / 0.14); }
+  83.33%, 94% { background-color: var(--color-accent-soft); color: var(--color-accent-dark); border-color: transparent; box-shadow: 0 0 0 0 rgb(14 124 123 / 0); }
+  98%, 100% { background-color: #ffffff; color: var(--color-muted); border-color: var(--color-line); box-shadow: 0 0 0 0 rgb(14 124 123 / 0); }
+}
+@keyframes wf-tick-4 {
+  0%, 82.33% { opacity: 0; transform: scale(0.6); }
+  84.33%, 94% { opacity: 1; transform: none; }
+  98%, 100% { opacity: 0; transform: scale(0.6); }
+}
+@keyframes wf-row-4 {
+  0%, 66.17% { background-color: transparent; }
+  67.17%, 82.33% { background-color: rgb(255 255 255 / 0.85); }
+  84.33%, 100% { background-color: transparent; }
+}
+@keyframes wf-bar {
+  0% { width: 0%; }
+  83.3%, 94% { width: 100%; }
+  98%, 100% { width: 0%; }
+}
+@keyframes wf-travel {
+  0% { left: 0; opacity: 1; }
+  66.67%, 80% { left: calc((100% + 1.5rem) * 0.8); opacity: 1; }
+  86%, 100% { left: calc((100% + 1.5rem) * 0.8); opacity: 0; }
+}
+@keyframes wf-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.wf-anim {
+  animation-duration: 9s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .wf-anim {
+    animation: none !important;
+  }
+}
+
+/* Long-form content rendered from Markdown (blog, case studies, legal pages) */
+.prose {
+  max-width: 54ch;
+  color: var(--color-ink);
+}
+.prose {
+  font-size: 1.0625rem;
+  line-height: 1.8;
+}
+.prose strong {
+  font-weight: 600;
+  color: var(--color-primary);
+}
+.prose h2 {
+  scroll-margin-top: 7rem;
+  margin-top: 2.75rem;
+  margin-bottom: 0.85rem;
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--color-primary);
+}
+.prose h3 {
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--color-primary);
+}
+.prose p,
+.prose ul,
+.prose ol,
+.prose table,
+.prose blockquote {
+  margin-bottom: 1.1rem;
+}
+.prose ul {
+  list-style: disc;
+  padding-left: 1.4rem;
+}
+.prose ol {
+  list-style: decimal;
+  padding-left: 1.4rem;
+}
+.prose li {
+  margin-bottom: 0.35rem;
+}
+.prose a {
+  color: var(--color-accent-dark);
+  font-weight: 400;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.prose blockquote {
+  border-left: 4px solid var(--color-line);
+  padding-left: 1rem;
+  color: var(--color-muted);
+}
+.prose table {
+  border-radius: 12px;
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+.prose th,
+.prose td {
+  border: 1px solid var(--color-line);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+.prose code {
+  background: var(--color-primary-soft);
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
+  font-size: 0.9em;
 }
