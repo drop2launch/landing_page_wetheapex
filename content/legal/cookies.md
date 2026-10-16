@@ -2,7 +2,7 @@
 title: Cookie Policy
 ---
 
-This page explains what {{name}} stores on your device when you visit {{url}}, why, and how to control it.
+This page explains what {{name}}, operated by {{legalName}}, stores on your device when you visit {{url}}, why, and how to control it.
 
 ## The short version
 

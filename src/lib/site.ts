@@ -3,7 +3,15 @@
 
 export const site = {
   name: "wetheapex",
-  legalName: "wetheapex",
+  // The registered company that operates wetheapex. Shown in the footer, contact page, legal pages and schema.
+  legalName: "Apex Core Technologies FZ-LLC",
+  address: {
+    street: "RAKEZ Business Zone, Al Nakheel Area",
+    poBox: "P.O. Box No. 10055",
+    city: "Ras Al Khaimah",
+    country: "United Arab Emirates",
+    countryCode: "AE",
+  },
   url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://wetheapex.com").replace(/\/$/, ""),
   tagline: "AI automation agency",
   description:

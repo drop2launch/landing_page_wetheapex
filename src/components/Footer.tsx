@@ -80,8 +80,10 @@ export function Footer() {
         </ul>
       </nav>
       <div className="wrap flex flex-col gap-3 border-t border-line py-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
-        <p>
-          © {site.name}. Based in {site.location}.
+        <p className="max-w-xl">
+          © {new Date().getFullYear()} {site.name}, operated by {site.legalName}.
+          <br />
+          {site.address.street}, {site.address.poBox}, {site.address.city}, {site.address.country}.
         </p>
         <ul className="flex flex-wrap gap-x-6 gap-y-2">
           {legal.map((l) => (

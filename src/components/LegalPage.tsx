@@ -46,6 +46,7 @@ const chatRetention = aiChat
 export const legalTokens = {
   name: site.name,
   legalName: site.legalName,
+  address: `${site.address.street}, ${site.address.poBox}, ${site.address.city}, ${site.address.country}`,
   email: site.email,
   url: site.url,
   updated: site.legalLastUpdated,

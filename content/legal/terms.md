@@ -2,7 +2,7 @@
 title: Terms of Service
 ---
 
-These terms apply when you use {{url}} (the "site"), operated by {{legalName}} ("{{name}}", "we", "us"), based in the United Arab Emirates. By using the site you agree to them. If you do not agree, please do not use the site.
+These terms apply when you use {{url}} (the "site"), operated by **{{legalName}}**, a company registered in the RAKEZ Business Zone, Ras Al Khaimah, United Arab Emirates ("{{name}}", "we", "us"). By using the site you agree to them. If you do not agree, please do not use the site.
 
 ## The short version
 
@@ -91,7 +91,7 @@ We may change or withdraw any part of the site at any time. We may also update t
 
 ## Governing law and disputes
 
-These terms are governed by the laws of the United Arab Emirates as applied in the Emirate of Dubai. If a dispute arises, please contact us first at {{email}} and we will try to resolve it within 30 days. If we cannot, the courts of Dubai have exclusive jurisdiction. This does not take away any right you have to bring a claim in your own country under mandatory consumer law.
+These terms are governed by the laws of the United Arab Emirates as applied in the Emirate of Ras Al Khaimah. If a dispute arises, please contact us first at {{email}} and we will try to resolve it within 30 days. If we cannot, the courts of Ras Al Khaimah have exclusive jurisdiction. This does not take away any right you have to bring a claim in your own country under mandatory consumer law.
 
 ## General
 
@@ -103,5 +103,6 @@ These terms are governed by the laws of the United Arab Emirates as applied in t
 
 ## Contact
 
-{{legalName}}
+{{legalName}}<br>
+{{address}}<br>
 Email: {{email}}

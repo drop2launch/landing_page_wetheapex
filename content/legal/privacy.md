@@ -2,7 +2,7 @@
 title: Privacy Policy
 ---
 
-This policy explains what personal data {{name}} ("we", "us") collects through {{url}} and when you contact us, why we collect it, who we share it with, how long we keep it and the rights you have. {{legalName}} is based in the United Arab Emirates and is responsible (the "controller") for this data.
+This policy explains what personal data {{name}} ("we", "us") collects through {{url}} and when you contact us, why we collect it, who we share it with, how long we keep it and the rights you have. {{name}} is operated by **{{legalName}}**, a company registered in the RAKEZ Business Zone, Ras Al Khaimah, United Arab Emirates, which is responsible (the "controller") for this data.
 
 ## The short version
 
@@ -131,7 +131,8 @@ This policy covers data collected through this site and our own business contact
 
 ## Contact, data protection officer and grievance contact
 
-**{{privacyContact}}**, {{legalName}}
+**{{privacyContact}}**, {{legalName}}<br>
+{{address}}<br>
 Email: {{email}}
 
 {{privacyContact}} is responsible for this policy and acts as our data protection officer, the person in charge of personal information under Quebec law, and our grievance contact under Indian law.

@@ -14,7 +14,7 @@ export function GET() {
     "",
     `> ${site.description}`,
     "",
-    `Based in ${site.location}. Works with businesses in ${site.countries.join(", ")}.`,
+    `Operated by ${site.legalName}, ${site.address.city}, ${site.address.country}. Based in ${site.location}. Works with businesses in ${site.countries.join(", ")}.`,
     `Contact: ${site.url}/contact · ${site.email}`,
     "",
     "## Services",

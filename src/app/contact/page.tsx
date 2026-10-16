@@ -82,6 +82,19 @@ export default function ContactPage() {
                     <span className="block truncate text-[0.95rem] text-primary">{site.email}</span>
                   </span>
                 </a>
+                <div className="mt-3 flex items-start gap-3 p-4">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-primary">
+                    <Icon name="pin" className="h-[1.1rem] w-[1.1rem]" />
+                  </span>
+                  <span className="min-w-0 text-[0.95rem] leading-relaxed text-primary">
+                    <span className="block text-sm text-muted">Registered office</span>
+                    {site.legalName}
+                    <br />
+                    {site.address.street}, {site.address.poBox}
+                    <br />
+                    {site.address.city}, {site.address.country}
+                  </span>
+                </div>
               </address>
             </div>
 
